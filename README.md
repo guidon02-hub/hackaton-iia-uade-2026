@@ -121,29 +121,101 @@ Por lo tanto, es un sistema inicial, interpretable y reproducible, cuya utilidad
 
 ## 3. Medición
 
-**Entrenamiento (casos 1–14)**
+Para evaluar nuestro sistema utilizamos los 20 casos proporcionados en `datos/T18.csv`, respetando la separación obligatoria establecida por la cátedra:
+
+- Entrenamiento: casos 1 a 14.
+- Prueba: casos 15 a 20.
+
+La clase positiva es SÍ (1): el producto se queda sin stock la semana siguiente.
+
+La predicción se realiza con la regla definida en la sección 2: si la demora del proveedor supera los días de cobertura, el sistema predice SÍ. En caso contrario, predice NO.
+
+### Entrenamiento (casos 1–14)
 
 | | Predice SÍ | Predice NO |
-|---|---|---|
-| **Real SÍ** | VP = <> | FN = <> |
-| **Real NO** | FP = <> | VN = <> |
+|---|---:|---:|
+| **Real SÍ** | VP = 5 | FN = 0 |
+| **Real NO** | FP = 2 | VN = 7 |
 
-**Prueba (casos 15–20)**
+**Verificación:** 5 + 0 + 2 + 7 = 14 casos.
+
+- Verdaderos positivos (5): casos 3, 4, 5, 7 y 11.
+- Falsos positivos (2): casos 2 y 10.
+- Falsos negativos (0): ninguno.
+- Verdaderos negativos (7): casos 1, 6, 8, 9, 12, 13 y 14.
+
+### Prueba (casos 15–20)
 
 | | Predice SÍ | Predice NO |
-|---|---|---|
-| **Real SÍ** | VP = <> | FN = <> |
-| **Real NO** | FP = <> | VN = <> |
+|---|---:|---:|
+| **Real SÍ** | VP = 4 | FN = 0 |
+| **Real NO** | FP = 1 | VN = 1 |
+
+**Verificación:** 4 + 0 + 1 + 1 = 6 casos.
+
+- Verdaderos positivos (4): casos 15, 16, 17 y 20.
+- Falsos positivos (1): caso 18.
+- Falsos negativos (0): ninguno.
+- Verdaderos negativos (1): caso 19.
+
+### Métricas de evaluación
 
 | Métrica | Entrenamiento | Prueba |
-|---|---|---|
-| Exactitud | <> | <> |
-| Precisión | <> | <> |
-| Sensibilidad | <> | <> |
-| Especificidad | <> | <> |
+|---|---:|---:|
+| Exactitud | 85,71 % | 83,33 % |
+| Precisión | 71,43 % | 80,00 % |
+| Sensibilidad | 100,00 % | 100,00 % |
+| Especificidad | 77,78 % | 50,00 % |
 
-**Entrenamiento contra prueba.** <¿Hay diferencia? ¿Por qué? ¿Sobreajuste o generalización?>
+**Cálculo de las métricas**
 
+**Exactitud = (VP + VN) / Total**
+
+- Entrenamiento: (5 + 7) / 14 = 85,71 %.
+- Prueba: (4 + 1) / 6 = 83,33 %.
+
+**Precisión = VP / (VP + FP)**
+
+- Entrenamiento: 5 / (5 + 2) = 71,43 %.
+- Prueba: 4 / (4 + 1) = 80,00 %.
+
+**Sensibilidad = VP / (VP + FN)**
+
+- Entrenamiento: 5 / (5 + 0) = 100 %.
+- Prueba: 4 / (4 + 0) = 100 %.
+
+**Especificidad = VN / (VN + FP)**
+
+- Entrenamiento: 7 / (7 + 2) = 77,78 %.
+- Prueba: 1 / (1 + 1) = 50 %.
+
+### Entrenamiento contra prueba
+
+La exactitud disminuye de 85,71 % en entrenamiento a 83,33 % en prueba, una diferencia de 2,38 puntos porcentuales.
+
+La sensibilidad se mantiene en 100 % en ambos conjuntos, lo que significa que nuestro sistema detectó todos los casos de quiebre de stock presentes en los datos.
+
+Sin embargo, la especificidad disminuye de 77,78 % a 50 %. Esto significa que el sistema identifica correctamente una proporción menor de los casos sin quiebre en el conjunto de prueba.
+
+La precisión aumenta de 71,43 % a 80 %, aunque este cambio debe interpretarse con precaución por el tamaño reducido de la muestra.
+
+**Sobreajuste y generalización**
+
+No observamos una caída importante de exactitud entre los dos conjuntos, pero esto no demuestra que el sistema generalice correctamente ante cualquier situación real.
+
+El conjunto de prueba contiene solamente seis productos, por lo que las métricas pueden variar mucho ante nuevos casos.
+
+Además, nuestro sistema es deliberadamente simple: utiliza una regla explícita y no fue construido para memorizar las etiquetas individuales del conjunto de entrenamiento.
+
+Por lo tanto, podemos afirmar que el desempeño observado es similar en exactitud entre entrenamiento y prueba, pero no que esté demostrada su capacidad de generalización a una operación logística real.
+
+### Conclusión de la medición
+
+El sistema consigue detectar los nueve quiebres de stock reales incluidos en los 20 casos, sin falsos negativos, pero produce tres falsas alarmas.
+
+Este resultado favorece el objetivo de anticipar quiebres de stock, aunque implica costos potenciales por reposiciones urgentes innecesarias.
+
+La evaluación demuestra la importancia de utilizar varias métricas y no depender exclusivamente de la exactitud.
 ## 4. El error más caro
 
 <¿Es peor el falso positivo o el falso negativo en su problema? ¿Por qué, según la ficha? ¿Qué cambiaron en el sistema para cometer menos ese error?>
