@@ -1,11 +1,14 @@
-# <Código> · <Título de su problemática>
+T18 · Predicción de quiebre de stock en la cadena de suministro
 
-> **Hackatón IIA · UADE · 3.4.257.** Este README es la plantilla del grupo. En su fork, reemplacen todo lo que está entre `< >` y borren esta nota. Las bases están en `BASES.md` y su ficha en `problematicas/`.
+Hackatón IIA · UADE · 3.4.257 · 3 de noviembre de 2026
 
-**Integrantes:** <nombre y apellido> · <nombre y apellido>
-**IA declarada:** <la del grupo desde la Clase 1>
-**Pista:** <Neurona / Reglas / Agente>
-**Publicación en LinkedIn:** <link>
+Integrantes: Guido Guzzetti · [Segundo integrante]
+
+IA declarada: ChatGPT
+
+Pista: Reglas
+
+Publicación en LinkedIn: Pendiente
 
 ---
 
