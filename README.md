@@ -216,9 +216,46 @@ El sistema consigue detectar los nueve quiebres de stock reales incluidos en los
 Este resultado favorece el objetivo de anticipar quiebres de stock, aunque implica costos potenciales por reposiciones urgentes innecesarias.
 
 La evaluación demuestra la importancia de utilizar varias métricas y no depender exclusivamente de la exactitud.
+
 ## 4. El error más caro
 
-<¿Es peor el falso positivo o el falso negativo en su problema? ¿Por qué, según la ficha? ¿Qué cambiaron en el sistema para cometer menos ese error?>
+En nuestro problema de abastecimiento identificamos dos tipos de errores que producen consecuencias distintas.
+
+**Falso positivo (FP):** el sistema predice que un producto se quedará sin stock, pero en realidad no ocurre. Según la ficha T18, esto puede provocar una reposición urgente innecesaria, generando costos adicionales de transporte y sobrestock.
+
+**Falso negativo (FN):** el sistema predice que un producto no se quedará sin stock, pero efectivamente ocurre un quiebre. Esto puede provocar ventas perdidas y que un cliente elija comprar a la competencia.
+
+**¿Cuál es el error más caro?**
+
+Consideramos más costoso el falso negativo porque el centro de distribución no anticipa la falta de mercadería y pierde la oportunidad de intervenir preventivamente.
+
+Además de perder ventas durante el período sin stock, existe el riesgo de deteriorar la relación comercial con los clientes.
+
+Aunque un falso positivo también genera costos, priorizamos detectar los quiebres reales antes que reducir al máximo la cantidad de alertas.
+
+**¿Qué cambiamos en el sistema para reducir ese error?**
+
+Como decisión de diseño, elegimos una regla de alerta preventiva:
+
+SI demora_proveedor > dias_cobertura, ENTONCES predecir SÍ.
+
+En lugar de utilizar una estrategia conservadora que solamente emita alertas ante condiciones extremas, esta regla activa la alerta cuando el tiempo de reposición supera la cobertura del inventario.
+
+Esta decisión busca reducir los falsos negativos, aunque puede aumentar los falsos positivos.
+
+**Resultados observados:**
+
+| Resultado | Entrenamiento | Prueba |
+|---|---:|---:|
+| Falsos negativos | 0 | 0 |
+| Falsos positivos | 2 | 1 |
+| Sensibilidad | 100 % | 100 % |
+
+La regla detectó todos los quiebres reales incluidos en los 20 casos disponibles, a costa de tres falsas alarmas.
+
+**Limitación:** el sistema no garantiza ausencia de falsos negativos en casos futuros. Los resultados corresponden únicamente al dataset del hackatón.
+
+**Conclusión:** preferimos tolerar algunas alertas innecesarias para disminuir el riesgo de no detectar productos que pueden quedarse sin stock. Esta elección responde a las consecuencias comerciales establecidas en nuestra ficha y no solamente a maximizar la exactitud.
 
 ## 5. ¿Comparado contra qué?
 
