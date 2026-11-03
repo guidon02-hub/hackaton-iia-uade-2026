@@ -119,6 +119,8 @@ La regla no utiliza directamente la variabilidad de la demanda ni modela la cant
 
 Por lo tanto, es un sistema inicial, interpretable y reproducible, cuya utilidad debe evaluarse comparando sus predicciones con los resultados reales del dataset.
 
+[Ver código Python del T18](t18_reglas.py)
+
 ## 3. Medición
 
 Para evaluar nuestro sistema utilizamos los 20 casos proporcionados en `datos/T18.csv`, respetando la separación obligatoria establecida por la cátedra:
