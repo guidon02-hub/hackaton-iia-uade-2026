@@ -320,9 +320,42 @@ Por eso evaluamos especialmente la sensibilidad y la cantidad de falsos negativo
 Los resultados permiten describir el comportamiento del sistema en los 20 casos ficticios, pero no garantizan su efectividad en una operación logística real.
 
 Para validar un uso real sería necesario contar con más observaciones, medir costos económicos y evaluar el sistema sobre nuevos períodos de abastecimiento.
+
 ## 6. Riesgo: el camino completo
 
-<Datos → modelo → decisión → consecuencia aplicado a su caso. Al menos un riesgo concreto.>
+Nuestro sistema utiliza información sobre inventarios y tiempos de reposición para anticipar posibles quiebres de stock.
+
+Un riesgo importante es que los datos de entrada estén desactualizados o sean incorrectos.
+
+**Cadena de riesgo: datos → modelo → decisión → consecuencia**
+
+**1. Datos:** el sistema recibe que un producto tiene 12 días de cobertura, cuando en realidad, por diferencias de inventario o registros desactualizados, solamente tiene 4 días. La demora del proveedor es de 8 días.
+
+**2. Modelo:** al comparar los valores recibidos, la regla evalúa si 8 > 12. Como esta condición es falsa, predice NO. Sin embargo, con los datos correctos, 8 > 4 y la regla habría emitido una alerta.
+
+**3. Decisión:** el planificador recibe una clasificación sin alerta y podría no priorizar la revisión o reposición urgente del producto.
+
+**4. Consecuencia:** el inventario podría agotarse antes de recibir mercadería, ocasionando ventas perdidas y posibles pérdidas de clientes.
+
+**¿Por qué es importante?**
+
+Aunque el algoritmo aplique correctamente sus reglas, una entrada equivocada puede generar una decisión perjudicial.
+
+Por lo tanto, una predicción técnicamente coherente con los datos ingresados no necesariamente representa la situación real del inventario.
+
+**Medidas para reducir el riesgo:**
+
+- Actualizar periódicamente los registros de inventario.
+- Verificar los tiempos de entrega de los proveedores.
+- Validar que los valores ingresados sean coherentes y no negativos.
+- Mantener la supervisión humana sobre las decisiones de reposición.
+- Revisar los casos en los que el sistema no emite una alerta, especialmente cuando la cobertura es reducida.
+
+**Conclusión.**
+
+La calidad del sistema no depende únicamente de la regla de clasificación, sino también de la confiabilidad de los datos y de cómo se utilizan sus predicciones para tomar decisiones.
+
+Por eso proponemos utilizarlo como herramienta de apoyo al planificador y no como un mecanismo que ejecute automáticamente compras urgentes sin supervisión.
 
 ## 7. Bitácora
 
