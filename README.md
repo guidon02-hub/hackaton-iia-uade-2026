@@ -357,16 +357,58 @@ La calidad del sistema no depende únicamente de la regla de clasificación, sin
 
 Por eso proponemos utilizarlo como herramienta de apoyo al planificador y no como un mecanismo que ejecute automáticamente compras urgentes sin supervisión.
 
-## 7. Bitácora
+## 7. Bitácora de uso de IA y del evaluador
 
-**Uso de la IA**
+**Grupo:** T18
 
-| # | Qué le pedimos | Qué aceptamos | Qué rechazamos y por qué |
+**Problemática:** ¿Este producto se queda sin stock la semana que viene?
+
+**IA declarada:** ChatGPT
+
+**Pista elegida:** Sistema de reglas SI-ENTONCES (IA simbólica).
+
+### A. Bitácora de uso de ChatGPT
+
+| Etapa | Uso de IA | Decisión del grupo | Justificación |
 |---|---|---|---|
-| 1 | <> | <> | <> |
+| Formulación | ChatGPT ayudó a organizar la problemática y formular el PEAS. | Aceptada | Se ajustó la formulación a la ficha oficial T18. |
+| Elección del sistema | Se propuso implementar un sistema de clasificación mediante reglas SI-ENTONCES. | Aceptada | Es interpretable, reproducible y permite justificar cada decisión. |
+| Construcción | Se propuso comparar la demora del proveedor con los días de cobertura. | Aceptada como regla inicial | Permite expresar una relación logística clara, aunque no incorpora directamente la variabilidad de la demanda. |
+| Evaluación | ChatGPT ayudó a organizar las matrices de confusión y calcular las métricas. | Aceptada para documentación | Los cálculos deben ser reproducibles a partir de los datos oficiales. |
+| Selección de métrica | Se propuso priorizar la sensibilidad. | Aceptada | Un falso negativo puede provocar ventas perdidas y pérdida de clientes. |
+| Comparación | Se propuso utilizar un clasificador que siempre predice NO como línea base. | Aceptada | Permite evaluar si la regla supera una estrategia trivial. |
+| Análisis de riesgos | Se identificó el riesgo de utilizar información de inventario desactualizada. | Aceptada | Demuestra que los errores de datos pueden afectar las decisiones operativas. |
 
-**Corridas contra el evaluador**
+### B. Limitaciones y propuestas no incorporadas
 
-| Corrida | Nota | Agujero que encontró | Qué cambiamos |
+**Variable no incorporada a la regla:** la variabilidad de la demanda.
+
+Aunque está disponible en el dataset y puede aportar información sobre la incertidumbre del consumo, decidimos mantener una primera versión basada solamente en la relación entre cobertura y demora.
+
+Esto mejora la simplicidad y la interpretabilidad, pero limita la capacidad del sistema para representar cambios inesperados de demanda.
+
+**Automatización de compras:** no se incorporó.
+
+El sistema emite una clasificación para asistir al planificador. No genera órdenes de compra automáticamente, porque una decisión real debería considerar costos, cantidades, prioridades y validación humana.
+
+### C. Registro del bot evaluador
+
+Los siguientes campos se completarán con los resultados reales obtenidos al consultar el bot oficial.
+
+| Intento | Puntaje (0–10) | Observaciones del evaluador | Cambio realizado |
 |---|---|---|---|
-| 1 | <> | <> | <> |
+| 1 | Pendiente | Pendiente | Pendiente |
+
+**Criterio de registro:** documentaremos cada evaluación realizada, incluyendo el puntaje, los problemas identificados y las modificaciones posteriores.
+
+No se registrarán como realizadas evaluaciones que todavía no hayan ocurrido.
+
+### D. Reflexión final
+
+ChatGPT fue utilizado como herramienta de apoyo para estructurar el proyecto, desarrollar las reglas y explicar las métricas.
+
+El grupo es responsable de comprender el funcionamiento del sistema, comprobar sus cálculos y defender sus decisiones.
+
+La experiencia permitió relacionar conceptos de inteligencia artificial simbólica, agentes racionales, evaluación de clasificadores y riesgos de la automatización con un problema concreto de logística.
+
+El aprendizaje principal es que un sistema no debe evaluarse únicamente por su porcentaje de aciertos: también deben considerarse los tipos de error, sus consecuencias y la calidad de los datos utilizados.
