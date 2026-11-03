@@ -14,16 +14,38 @@ Publicación en LinkedIn: Pendiente
 
 ## 1. Formulación y PEAS
 
-**La pregunta.** <Para cada caso, ¿…? SÍ significa: …>
+**La pregunta.** Para cada producto (SKU) del centro de distribución, ¿se quedará sin stock durante la próxima semana?
 
-| PEAS | Su sistema |
+**SÍ (1):** el producto se queda sin stock la semana siguiente.
+
+**NO (0):** el producto no se queda sin stock la semana siguiente.
+
+El planificador de abastecimiento utiliza el sistema para identificar anticipadamente productos en riesgo y decidir cuáles requieren una revisión para reposición urgente.
+
+| PEAS | Nuestro sistema |
 |---|---|
-| Medida de rendimiento | <cómo se sabe si decidió bien> |
-| Entorno | <dónde y con qué decide> |
-| Actuadores | <qué hace con la decisión> |
-| Sensores | <qué datos recibe> |
+| Medida de rendimiento | Detectar correctamente los quiebres de stock mediante la sensibilidad, controlando falsas alertas con la precisión y especificidad. También se calcula la exactitud. |
+| Entorno | Centro de distribución con productos (SKU), inventarios, demanda variable y proveedores con diferentes tiempos de reposición. |
+| Actuadores | Emitir alertas de riesgo de quiebre de stock o informar que no se detecta riesgo, para apoyar las decisiones del planificador. |
+| Sensores | Días de cobertura del inventario actual, variabilidad de la demanda (coeficiente de variación) y demora del proveedor en días. |
 
-**Objetivo y métrica.** <Qué es lo que de verdad importa en su problema y con qué métrica lo van a medir. ¿Son lo mismo?>
+**Objetivo y métrica.**
+
+El objetivo operativo es reducir los quiebres de stock que ocasionan ventas perdidas y posible pérdida de clientes, evitando al mismo tiempo los costos de reposiciones urgentes innecesarias.
+
+Para evaluar el sistema utilizamos como métrica principal la **sensibilidad**:
+
+Sensibilidad = VP / (VP + FN)
+
+Esta métrica indica qué proporción de los quiebres de stock reales fueron detectados por el sistema.
+
+Elegimos priorizarla porque un falso negativo significa no anticipar un quiebre de stock, lo cual puede ocasionar ventas perdidas y la pérdida de clientes.
+
+Sin embargo, una sensibilidad elevada no garantiza por sí sola una buena decisión de abastecimiento. Demasiadas alertas incorrectas pueden generar fletes urgentes y sobrestock.
+
+Por eso también evaluamos la precisión, la especificidad y la exactitud, y posteriormente comparamos los resultados contra una línea base trivial.
+
+**El objetivo y la métrica no son lo mismo:** el objetivo es mejorar el abastecimiento y reducir sus consecuencias negativas; la métrica cuantifica el desempeño del sistema para detectar casos positivos.
 
 ## 2. El sistema
 
