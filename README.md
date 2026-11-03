@@ -259,15 +259,67 @@ La regla detectó todos los quiebres reales incluidos en los 20 casos disponible
 
 ## 5. ¿Comparado contra qué?
 
-**Línea base trivial.** <Qué resultado saca un sistema que responde siempre lo mismo, y cómo se compara el suyo.>
+**Línea base trivial.**
 
-| Checklist (Clase 6) | Respuesta |
+Para determinar si nuestro sistema realmente aporta valor, lo comparamos contra un clasificador trivial que siempre responde la clase mayoritaria del conjunto de entrenamiento.
+
+De los 14 casos de entrenamiento, 9 corresponden a productos que no se quedaron sin stock (NO) y 5 a productos que sí se quedaron sin stock (SÍ).
+
+Por lo tanto, la línea base predice siempre NO, independientemente de los días de cobertura, la variabilidad de la demanda o la demora del proveedor.
+
+**Resultados de la comparación**
+
+| Indicador | Línea base trivial | Nuestro sistema |
+|---|---:|---:|
+| Exactitud entrenamiento | 64,29 % | 85,71 % |
+| Exactitud prueba | 33,33 % | 83,33 % |
+| Sensibilidad entrenamiento | 0 % | 100 % |
+| Sensibilidad prueba | 0 % | 100 % |
+| Especificidad entrenamiento | 100 % | 77,78 % |
+| Especificidad prueba | 100 % | 50 % |
+
+La línea base acierta 9 de 14 casos de entrenamiento y 2 de 6 casos de prueba.
+
+Nuestro sistema acierta 12 de 14 casos de entrenamiento y 5 de 6 casos de prueba.
+
+La exactitud aumenta 21,42 puntos porcentuales en entrenamiento y 50 puntos porcentuales en prueba.
+
+Sin embargo, la diferencia más importante para nuestro objetivo está en la sensibilidad.
+
+La línea base nunca detecta un quiebre de stock porque siempre responde NO. Por eso tiene sensibilidad del 0 %.
+
+Nuestro sistema alcanza una sensibilidad del 100 % en ambos conjuntos, detectando todos los quiebres reales de los datos disponibles.
+
+Como contrapartida, la línea base presenta una especificidad del 100 %, mientras que nuestro modelo produce algunas falsas alarmas. Esto refleja el costo de priorizar la detección de quiebres.
+
+La precisión de la línea base queda indefinida, porque nunca predice la clase positiva y el denominador VP + FP es cero.
+
+**Conclusión de la comparación.**
+
+Nuestro modelo supera a la línea base en exactitud y sensibilidad, aunque presenta menor especificidad.
+
+Dado que en nuestra problemática un quiebre no detectado puede ocasionar ventas perdidas y pérdida de clientes, consideramos más útil el comportamiento de nuestro sistema que el de una estrategia que nunca emite alertas.
+
+Esta conclusión se limita a los datos ficticios disponibles y no demuestra por sí sola el desempeño en un centro de distribución real.
+
+### Checklist crítico de la Clase 6
+
+| Checklist | Respuesta |
 |---|---|
-| ¿Qué datos? | <> |
-| ¿Qué métrica? | <> |
-| ¿Comparado contra qué? | <> |
-| ¿Quién lo midió? | <> |
+| ¿Qué datos? | Los 20 casos ficticios del grupo T18, proporcionados por la cátedra. Se utilizaron 14 casos de entrenamiento y 6 de prueba, sin modificar la división original. |
+| ¿Qué métrica? | Sensibilidad como medida principal, complementada con exactitud, precisión y especificidad. |
+| ¿Comparado contra qué? | Un clasificador trivial que siempre predice NO, por ser la clase mayoritaria del entrenamiento. |
+| ¿Quién lo midió? | El grupo T18, con asistencia de ChatGPT para calcular las matrices y métricas a partir de los datos de la cátedra. Los resultados son reproducibles mediante las reglas publicadas. |
 
+**Evaluación crítica.**
+
+La exactitud por sí sola podría llevar a conclusiones equivocadas, porque no distingue entre detectar un quiebre real y acertar que un producto no sufrirá un faltante.
+
+Por eso evaluamos especialmente la sensibilidad y la cantidad de falsos negativos, sin omitir los falsos positivos.
+
+Los resultados permiten describir el comportamiento del sistema en los 20 casos ficticios, pero no garantizan su efectividad en una operación logística real.
+
+Para validar un uso real sería necesario contar con más observaciones, medir costos económicos y evaluar el sistema sobre nuevos períodos de abastecimiento.
 ## 6. Riesgo: el camino completo
 
 <Datos → modelo → decisión → consecuencia aplicado a su caso. Al menos un riesgo concreto.>
